@@ -23,4 +23,6 @@ from django.urls import path
 from todos import views  # views 모듈 임포트
 
 # http://127.0.0.1:8000/admin
-urlpatterns = [path("", views.home, name="home")]
+urlpatterns = [
+    path("", views.home, name="home")
+]  # views.py 파일의 home 함수를 callback 함수로 받는다.
