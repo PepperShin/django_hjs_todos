@@ -28,4 +28,7 @@ urlpatterns = [
         "", views.todo_list, name="todo_list"
     ),  # views.py 파일의 home 함수를 callback 함수로 받는다.
     path("post/", views.todo_post, name="todo_post"),
+    # http://127.0.0.1:8000/todo?number=1&name=ghlqkf 스트링 쿼리
+    # http://127.0.0.1:8000/todo/{1}/ + get, post, put, delete. 변수화
+    path("<int:pk>", views.todo_detail, name="todo_detail"),  # dev_4
 ]

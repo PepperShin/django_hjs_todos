@@ -1,9 +1,15 @@
+{% load static %}
+{% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ToDo 목록 앱</title>
+  {% comment %} 
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% endcomment %}
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 </head>
@@ -11,25 +17,40 @@
   <div class="container">
     <h1>TODO 목록 앱</h1>
     <p>
-      <a href="{% url 'todo_post' %}"><i class="bi-plus"></i>Add Todo</a>      
+      <a href="{% url 'todo_post' %}"><i class="bi-plus"></i>Add Todo</a> <!-- i는 부트스트랩 아이콘 -->
       <a href="" class="btn btn-primary" style="float:right">완료한 TODO 목록</a>
     </p>
     
     <ul class="list-group">
-      
+      {% comment %} views.py의 {"todos": todos} {% endcomment %}
       {% for todo  in todos %}
         <li class="list-group-item">
-          <a href="">{{ todo.title }}</a>          
+          {% comment %} todo.pk는 <int:pk> 변수 pk 가 아닌, todo 테이블의 primary key를 말한다. {% endcomment %}
+          <a href="{% url 'todo_detail' pk=todo.pk %}">{{ todo.title }}</a>
           {% if todo.important %}
             <span class="badge btn-danger">!</span>
           {% endif %}
           <div style="float:right">
             <a href="" class="btn btn-danger">완료</a>
             <a href="" class="btn btn-outline-primary">수정하기</a>
-          </div>            
+          </div>
         </li>
       {% endfor %}  
     </ul>
+    {% comment %} {% endfor %}
+      {% for todo in todos %}
+        {{ todo.title }}
+        <br>
+        {{ todo.description }}
+        <br>
+        {{ todo.created }}
+        <br>
+        {{ todo.important }}
+        <br>
+       {% endfor %}
+       {% lorem %}    <!-- 👈 lorem 생성 -->
+       {% lorem 3 p %} <!-- 👈 lorem 문장(p)을 3개 생성 -->
+       {% lorem 2 w random %} {% lorem 5 w random %} <!-- 👈 lorem 단어(w)을 5개 랜덤 생성 --> {% endcomment %}
   </div>
 </body>
 </html>

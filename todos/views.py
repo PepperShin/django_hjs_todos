@@ -32,3 +32,9 @@ def todo_post(request):
         form = TodoForm()
 
     return render(request, "todo/todo_post.html", {"form": form})
+
+
+# urls.py의 path("<int:pk>", views.todo_detail, name="todo_detail")
+def todo_detail(request, pk):
+    todo = Todo.objects.get(id=pk)  # filter는 1개 이상일때, get은 한개만.
+    return render(request, "todo/todo_detail.html", {"todo": todo})
