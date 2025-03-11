@@ -24,8 +24,8 @@ def todo_list(request):
 def todo_post(request):
     if request.method == "POST":
         form = TodoForm(request.POST)
-        if form.is_valid():
-            todo = form.save(commit=False)  # 커밋은 안하고 저장만
+        if form.is_valid():  # 안의 글자들이 유효한가?
+            todo = form.save(commit=False)  # 커밋은 안하고 SQL 쿼리만 실행.
             todo.save()  # 이때 sql 쿼리문이 날아간다
             return redirect("todo_list")
     else:
@@ -38,3 +38,20 @@ def todo_post(request):
 def todo_detail(request, pk):
     todo = Todo.objects.get(id=pk)  # filter는 1개 이상일때, get은 한개만.
     return render(request, "todo/todo_detail.html", {"todo": todo})
+
+
+def todo_edit(request, pk):
+    todo = Todo.objects.get(id=pk)
+
+    if request.method == "POST":
+        form = TodoForm(request.POST, instance=todo)
+        if form.is_valid():
+            todo = form.save(commit=False)
+            todo.save()
+            return redirect("todo_list")
+
+    else:
+        # 레코드를 instance로 지정한다. (한줄 전체 다.)
+        form = TodoForm(instance=todo)
+
+    return render(request, "todo/todo_post.html", {"form": form})

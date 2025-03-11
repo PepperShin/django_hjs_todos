@@ -31,4 +31,5 @@ urlpatterns = [
     # http://127.0.0.1:8000/todo?number=1&name=ghlqkf 스트링 쿼리
     # http://127.0.0.1:8000/todo/{1}/ + get, post, put, delete. 변수화
     path("<int:pk>", views.todo_detail, name="todo_detail"),  # dev_4
+    path("<int:pk>/edit", views.todo_edit, name="todo_edit"),  # dev_5
 ]
